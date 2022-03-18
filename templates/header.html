@@ -21,21 +21,15 @@
                         <a class="nav-link smoth-scroll" href="/">About</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link smoth-scroll" href="/">Course</a>
+                        <a class="nav-link smoth-scroll" href="{% url 'blog:course-view' %}">Course</a>
                     </li>
-                    <li class="nav-item">
-                        <a class="nav-link smoth-scroll" href=/">Blog</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link smoth-scroll " href="/">Contact</a>
-                    </li>
-                    {% if user.is_authenticated %}
+                    {% if user.is_authenticated %}s
                      <li class="nav-item">
-                        <a class="nav-link smoth-scroll " href="/">signout</a>
+                        <a class="nav-link smoth-scroll " href="{% url 'account_logout' %}">signout</a>
                     </li>
                     {% else %}
                      <li class="nav-item">
-                        <a class="nav-link smoth-scroll " href="/">Login</a>
+                        <a class="nav-link smoth-scroll " href="{% url 'account_login' %}">Login</a>
                     </li>
                     {% endif %}
                 </ul>

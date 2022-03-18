@@ -79,7 +79,7 @@ img {
 }
 
 a:hover {
-  color: #635CDB;
+  color: #C58071;
   text-decoration: none;
 }
 
@@ -124,7 +124,7 @@ h6 {
 }
 
 .f-color {
-  color: #635CDB;
+  color: #C5807;
 }
 
 h5.subtitle {
@@ -162,7 +162,7 @@ h5.subtitle {
 }
 
 .section-title span {
-  color: #635CDB;
+  color: #C5807;
 }
 
 .section {
@@ -171,7 +171,7 @@ h5.subtitle {
 
 .line {
   width: 50px;
-  background: #635CDB;
+  background: #C5807;
   height: 1px;
   margin: 10px auto;
 }
@@ -289,7 +289,7 @@ h5.subtitle {
 }
 
 .bg-feature {
-  background-color: #635CDB;
+  background-color: #C5807;
 }
 
 .bg-primary {
@@ -327,7 +327,7 @@ h5.subtitle {
 }
 
 .feature-overlay {
-  background: #635CDB;
+  background: #C5807;
   opacity: .97;
 }
 
@@ -461,7 +461,7 @@ h5.subtitle {
 .dropdown-item:hover {
   color: #fff;
   text-decoration: none;
-  background-color: #635CDB;
+  background-color: #C5807;
 }
 
 .dropdown-toggle::after {
@@ -538,7 +538,7 @@ h5.subtitle {
 
 .banner-content .subtitle {
   color: #fff;
-  background: #635CDB;
+  background: #C5807;
   display: inline-block;
   padding: 3px 8px;
   margin-bottom: 20px;
@@ -546,7 +546,7 @@ h5.subtitle {
 }
 
 .subtitle {
-  color: #635CDB;
+  color: #C5807;
 }
 
 .banner-content p {
@@ -643,7 +643,7 @@ INner Pages
 
 .intro-box span {
   font-size: 28px;
-  color: #635CDB;
+  color: #C5807;
 }
 
 .intro-cta {
@@ -827,6 +827,9 @@ HISTORY MISSION
 
 .text-white p {
   color: #fff;
+}
+.text-brown  {
+  color: #C58071;
 }
 
 #service {

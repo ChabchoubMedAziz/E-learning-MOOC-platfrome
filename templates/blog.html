@@ -1,0 +1,41 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block content %}
+<section id="blog" class="section-padding bg-main">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-12 col-sm-12 m-auto">
+                    <div class="section-heading">
+                        <h4 class="section-title">Latest Blog news</h4>
+                        <div class="line"></div>
+                        <p>Our blog journey may come handy to build a community to make more effective success for business. Latest and trend tricks will help a lot </p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="row">
+                 {% for post in  posts %}
+                <div class="col-lg-4 col-sm-6 col-md-4">
+                    <div class="blog-block ">
+
+                        <img style="height: 274px; box-shadow:0px 1px 6px rgb(0 0 0 / 27%); border-radius: 5px;" src="{{ post.image.url }}" alt="" class="img-fluid">
+                        <div class="blog-text">
+                            <h6 class="author-name">
+                                 {% for cat in post.get_categories.all %}
+                                <span>{{ cat}}</span>
+                                {% endfor %}
+                            {{ post.author | title }}</h6>
+                            <a href="{% url 'blog:post-detail'  post.slug%}" class="h5 my-2 d-inline-block">
+                               {{post.title}}.
+                            </a>
+                            <p>{{ post.body| striptags|safe | linebreaks|truncatechars:154  }}</p>
+                        </div>
+
+                    </div>
+                </div>
+                 {% endfor %}
+            </div>
+        </div>
+    </section>
+{% endblock content %}

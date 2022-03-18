@@ -37,11 +37,21 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    # django-all-auth
+    'django.contrib.sites',
+    'allauth',
+    'allauth.account',
+
     'crispy_forms',
     'ckeditor_uploader',
     'ckeditor',
+    # local apps
+    'blog',
+    'accounts',
 ]
-
+SITE_ID = 1
+LOGIN_REDIRECT_URL = 'blog:index-view'
+LOGOUT_REDIRECT_URL = 'blog:index-view'
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
