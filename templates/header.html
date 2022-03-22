@@ -20,6 +20,11 @@
                     <li class="nav-item">
                         <a class="nav-link smoth-scroll" href="/">About</a>
                     </li>
+                     {% if  user.is_superuser %}
+                    <li class="nav-item">
+                        <a class="nav-link smoth-scroll" href="{% url 'blog:profile-view' %}">Profile</a>
+                    </li>
+                    {% endif %}
                     <li class="nav-item">
                         <a class="nav-link smoth-scroll" href="{% url 'blog:course-view' %}">Course</a>
                     </li>

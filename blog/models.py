@@ -87,12 +87,19 @@ class Course(models.Model):
 	title = models.CharField(max_length=200)
 	body = RichTextField()
 	categories = models.ManyToManyField(CategoryCourse)
+	caption = models.CharField(max_length=100,default='null')
+	video = models.FileField(upload_to="video/%y",default='null')
+
+
 	image = models.ImageField(upload_to='image-course/')
 	slug = models.SlugField(unique=True, blank=True)
 	created_date = models.DateTimeField(auto_now_add=True)
 	#author = models.ForeignKey(Account, on_delete=models.CASCADE)
 	featured = models.BooleanField(default=False)
 
+
+	def __str__(self):
+		return self.caption
 
 	def __str__(self):
 		return str(self.title)
@@ -126,4 +133,5 @@ class Course(models.Model):
 
 	class Meta:
 		ordering = ['-created_date']
+
 

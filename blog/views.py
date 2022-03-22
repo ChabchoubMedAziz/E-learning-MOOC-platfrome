@@ -7,11 +7,14 @@ from django.contrib.auth.models import User
 from django.http import HttpResponse
 from django.db.models import Q, Count
 from django.urls import reverse_lazy
+from django.http import HttpResponse, HttpResponseRedirect
 from django.contrib.auth.decorators import login_required
 from django.contrib.admin.views.decorators import staff_member_required
-#from accounts.models import Account
+from accounts.models import Account
 from .models import Post, CategoryPost, Contact,Course,CourseViewCount
-#from .forms import CommentForm, PostForm, CourseForm, ContactForm
+from .forms import  CourseForm
+from django.template import loader
+
 
 # Create your views here.
 def index(request):#1
@@ -19,7 +22,24 @@ def index(request):#1
 	#context = {
 	#'posts':posts,
 	#}
-	return render(request, 'index.html')
+	objects = Course.objects.all()
+	paginator = Paginator(Course.objects.filter(featured=True), 6)
+	page_request_var = 'page'
+	page = request.GET.get(page_request_var)
+	try:
+		paginated_queryset = paginator.page(page)
+	except PageNotAnInteger:
+		paginated_queryset = paginator.page(1)
+	except EmptyPage:
+		paginated_queryset = paginator.page(paginator.num_pages)
+
+	context = {
+		'objects': objects,
+		'queryset': paginated_queryset,
+		'page_request_var': page_request_var,
+
+	}
+	return render(request, 'index.html',context)
 
 
 def blog(request):#3
@@ -61,7 +81,7 @@ def course_search(request):
 
 def course(request):#2
 	courses =  Course.objects.filter(featured=True)[:6]
-	detail = Course.objects.all()
+	detail = Course.objects.filter(featured=True)[:6]
 	context = {
 	'course':courses,
 	'detail':detail,
@@ -100,7 +120,11 @@ def course_detail(request, slug):
 def course_create(request):
 	# user = request.user
 	form = CourseForm(request.POST or None, request.FILES or None)
-	author = Account.objects.get(user=request.user)
+	try:
+		author = Account.objects.get(user=request.user)
+	except Account.DoesNotExist:
+		author = None
+
 	if request.method == 'POST':
 		if form.is_valid():
 			form.instance.author = author
@@ -115,7 +139,10 @@ def course_create(request):
 def course_update(request, slug):
 	course = get_object_or_404(Course, slug=slug)
 	form = CourseForm(request.POST or None, request.FILES or None, instance=course)
-	author = Account.objects.get(user=request.user)
+	try:
+		author = Account.objects.get(user=request.user)
+	except Account.DoesNotExist:
+		author = None
 	if request.method == 'POST':
 		if form.is_valid():
 			form.instance.author = author
@@ -132,3 +159,11 @@ class CourseDelete(LoginRequiredMixin, DeleteView):
 	template_name = 'course/course_delete.html'
 	context_object_name = 'objects'
 	success_url = reverse_lazy('blog:course-view')
+
+
+
+def profile(request):
+    context = {'segment': 'index'}
+
+    html_template = loader.get_template('profile.html')
+    return HttpResponse(html_template.render(context, request))
