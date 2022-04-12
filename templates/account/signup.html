@@ -1,5 +1,4 @@
 {% extends "base.html" %}
-{% load crispy_forms_tags %}
 {% load i18n %}
 
 {% block head_title %}{% trans "Signup" %}{% endblock %}
@@ -18,25 +17,48 @@
 <h1 class="text-white">{% trans "Sign Up" %}</h1>
 
 <p>{% blocktrans %}Already have an account? Then please <a class="text-brown" href="{{ login_url }}">sign in</a>.{% endblocktrans %}</p>
+<div class="container">
+  <form  method="post">
+                    {% csrf_token %}
+                  <div class="form-group first">
+                    <label id="username" for="username">Username</label>
 
-<form class="signup" id="signup_form" method="post" action="{% url 'account_signup' %}">	{% csrf_token %}
-	  {{ form | crispy }}
-	  {% if redirect_field_value %}
-	  <input type="hidden" name="{{ redirect_field_name }}" value="{{ redirect_field_value }}" />
-    <div>
-  <input type="radio" id="huey" name="{{ redirect_field_is_teacher }}" value="{{ redirect_field_is_teacher }}"
-         checked>
-  <label  for="huey">Huey</label>
+                      {{ form.username }}
+                  </div>
+                  <div class="form-group first">
+                    <label id="email" for="email">Email</label>
+                      {{ form.email}}
+                  </div>
+                  <div class="form-group last mb-4">
+                    <label id="password"for="password">Password</label>
+                      {{ form.password1 }}
+                  </div>
+                  <div class="form-group last mb-4">
+                    <label id="password2"for="password">Confirm Password</label>
+                      {{ form.password2 }}
+                  </div>
+                  <div class="d-flex mb-5 align-items-center">
+                    <label class="control control--checkbox mb-0"><span class="caption">Admin</span>
+                        {{ form.is_admin }}
+                      <div class="control__indicator"></div>
+                    </label>
+                  </div>
+                  <div class="d-flex mb-5 align-items-center">
+                    <label class="control control--checkbox mb-0"><span class="caption">customer</span>
+                        {{ form.is_customer }}
+                      <div class="control__indicator"></div>
+                    </label>
+                  </div>
+                  <div class="d-flex mb-5 align-items-center">
+                    <label class="control control--checkbox mb-0"><span class="caption">employee</span>
+                        {{ form.is_employee }}
+                      <div class="control__indicator"></div>
+                    </label>
+                  </div>
+                    <span class="text-error">{{ form.errors }}</span>
+                  <input type="submit"  value="Register" class="btn btn-pill text-white btn-block btn-primary">
+                </form>
 </div>
-
-<div>
-  <input type="radio" id="dewey" name="drone" value="dewey">
-  <label for="dewey">Dewey</label>
-</div>
-
-	  {% endif %}
-	  <button type="submit" class="btn btn-hero btn-circled ">{% trans "Sign Up" %} &raquo;</button>
-</form>
 </div>
                 </div>
             </div>

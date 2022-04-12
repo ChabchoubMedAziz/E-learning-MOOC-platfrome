@@ -13,6 +13,8 @@ import os
 from pathlib import Path
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
+import accounts.apps
+
 BASE_DIR = Path(__file__).resolve().parent.parent
 
 
@@ -41,8 +43,9 @@ INSTALLED_APPS = [
     'django.contrib.sites',
     'allauth',
     'allauth.account',
-
     'crispy_forms',
+
+
     'ckeditor_uploader',
     'ckeditor',
     # local apps
@@ -51,7 +54,7 @@ INSTALLED_APPS = [
 ]
 SITE_ID = 1
 LOGIN_REDIRECT_URL = 'blog:index-view'
-LOGOUT_REDIRECT_URL = 'blog:index-view'
+#LOGOUT_REDIRECT_URL = 'blog:index-view'
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
@@ -157,3 +160,4 @@ CKEDITOR_CONFIGS = {
 # https://docs.djangoproject.com/en/3.2/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+AUTH_USER_MODEL = 'accounts.User'

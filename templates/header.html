@@ -20,7 +20,7 @@
                     <li class="nav-item">
                         <a class="nav-link smoth-scroll" href="/">About</a>
                     </li>
-                     {% if  user.is_superuser %}
+                     {% if  user.is_customer %}
                     <li class="nav-item">
                         <a class="nav-link smoth-scroll" href="{% url 'blog:profile-view' %}">Profile</a>
                     </li>
@@ -28,13 +28,13 @@
                     <li class="nav-item">
                         <a class="nav-link smoth-scroll" href="{% url 'blog:course-view' %}">Course</a>
                     </li>
-                    {% if user.is_authenticated %}s
+                    {% if user.is_authenticated %}
                      <li class="nav-item">
-                        <a class="nav-link smoth-scroll " href="{% url 'account_logout' %}">signout</a>
+                        <a class="nav-link smoth-scroll " href="{% url 'signout' %}">signout</a>
                     </li>
                     {% else %}
                      <li class="nav-item">
-                        <a class="nav-link smoth-scroll " href="{% url 'account_login' %}">Login</a>
+                        <a class="nav-link smoth-scroll " href="{% url 'login_view' %}">Login</a>
                     </li>
                     {% endif %}
                 </ul>

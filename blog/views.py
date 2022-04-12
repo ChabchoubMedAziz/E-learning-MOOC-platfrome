@@ -3,16 +3,16 @@ from django.shortcuts import (
 from django.core.paginator import Paginator, PageNotAnInteger, EmptyPage
 from django.views.generic import DetailView, DeleteView
 from django.contrib.auth.mixins import LoginRequiredMixin
-from django.contrib.auth.models import User
+#from django.contrib.auth.models import User
 from django.http import HttpResponse
 from django.db.models import Q, Count
 from django.urls import reverse_lazy
 from django.http import HttpResponse, HttpResponseRedirect
 from django.contrib.auth.decorators import login_required
 from django.contrib.admin.views.decorators import staff_member_required
-from accounts.models import Account
-from .models import Post, CategoryPost, Contact,Course,CourseViewCount
-from .forms import  CourseForm
+from accounts.models import User
+from .models import Post, CategoryPost, Contact,Course,CourseViewCount,Comment
+from .forms import  CourseForm,CommentForm
 from django.template import loader
 
 
@@ -106,13 +106,23 @@ def contact(request):
 @login_required
 def course_detail(request, slug):
 	objects = get_object_or_404(Course, slug=slug)
-
 	if request.user.is_authenticated:
 		CourseViewCount.objects.get_or_create(user=request.user, course=objects)
+	form = CommentForm(request.POST or None )
+	comments = Comment.objects.all()
+	user = request.user
+	if request.method == 'POST':
+
+		if form.is_valid():
+			form.instance.user = user
+			form.instance.post = objects
+			form.save()
+
 
 	context = {
-	'objects':objects
-	}
+		'objects':objects,
+		'form': form,
+		'comments': comments,}
 	return render(request, 'course/course_detail.html', context)
 
 
@@ -120,32 +130,32 @@ def course_detail(request, slug):
 def course_create(request):
 	# user = request.user
 	form = CourseForm(request.POST or None, request.FILES or None)
-	try:
-		author = Account.objects.get(user=request.user)
-	except Account.DoesNotExist:
-		author = None
+	"""try:
+		author = User.objects.get(username=request.username)
+	except User.DoesNotExist:
+		author = None"""
 
 	if request.method == 'POST':
 		if form.is_valid():
-			form.instance.author = author
+			#form.instance.author = author
 			form.save()
 			return redirect(reverse('blog:course-detail', kwargs={
 				'slug': form.instance.slug
 				}))
-	context = {'form':form, }
+	context = {'form':form,}
 	return render(request, 'course/course_create.html', context)
 
 @login_required
 def course_update(request, slug):
 	course = get_object_or_404(Course, slug=slug)
 	form = CourseForm(request.POST or None, request.FILES or None, instance=course)
-	try:
+	"""try:
 		author = Account.objects.get(user=request.user)
 	except Account.DoesNotExist:
-		author = None
+		author = None"""
 	if request.method == 'POST':
 		if form.is_valid():
-			form.instance.author = author
+			#form.instance.author = author
 			form.save()
 			return redirect(reverse('blog:course-detail', kwargs={
 				'slug': form.instance.slug
@@ -163,7 +173,15 @@ class CourseDelete(LoginRequiredMixin, DeleteView):
 
 
 def profile(request):
-    context = {'segment': 'index'}
+	objects = Course.objects.filter(featured=True)[:6]
+	comments = Comment.objects.all()
+	user = request.user
 
-    html_template = loader.get_template('profile.html')
-    return HttpResponse(html_template.render(context, request))
+	context = {
+		'segment': 'index',
+		'objects': objects,
+		'comments': comments, }
+	html_template = loader.get_template('profile.html')
+	return HttpResponse(html_template.render(context, request))
+
+

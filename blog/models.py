@@ -14,6 +14,20 @@ class CategoryPost(models.Model):
 		return str(self.name)
 
 
+class Comment(models.Model):
+	user = models.CharField(max_length=100, null=True, blank=True)
+	content = models.TextField()
+	slug = models.SlugField(unique=False, blank=True)
+	timestamp = models.DateTimeField(auto_now_add=True,)
+	course = models.ForeignKey('Course', related_name='comments', on_delete=models.CASCADE,default=0,db_constraint=False)
+	#courses=course.objects.all()
+
+	def __str__(self):
+		return str(self.user)
+
+
+
+
 class Contact(models.Model):
 	name = models.CharField(max_length=60)
 	email = models.EmailField(max_length=100)
@@ -95,11 +109,8 @@ class Course(models.Model):
 	slug = models.SlugField(unique=True, blank=True)
 	created_date = models.DateTimeField(auto_now_add=True)
 	#author = models.ForeignKey(Account, on_delete=models.CASCADE)
-	featured = models.BooleanField(default=False)
+	featured = models.BooleanField(default=True)
 
-
-	def __str__(self):
-		return self.caption
 
 	def __str__(self):
 		return str(self.title)
@@ -124,7 +135,8 @@ class Course(models.Model):
 
 	def get_categories(self):
 		return self.categories.all()
-
+	def get_titles(self):
+		return self.title.all()
 	def save(self, *args, **kwargs):
 		if self.slug == '':
 			self.slug = slugify(self.title)[:15]

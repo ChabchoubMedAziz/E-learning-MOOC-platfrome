@@ -83,6 +83,45 @@
                                     {% endif %}
 
                         {% endifequal %}
+
+
+                     <div class="comments my-4">
+                        <h3 class="mb-5">Comments </h3>
+                        {% for comment in comments %}
+                         {% ifequal comment.course.title objects.title %}
+
+                        <div class="media mb-4">
+                            <img src="../media/avatar_1.png" alt="" class="img-fluid d-flex mr-4 rounded">
+                            <div class="media-body">
+                                <h5>{{comment.user}}</h5>
+                                <span class="text-muted">{{ comment.timestamp | timesince }}</span>
+                                <p class="mt-2">{{ comment.content }}</p>
+                                <hr>
+                               <!--  <a href="#" class="reply">Reply <i class="fa fa-reply"></i></a> -->
+                            </div>
+                        </div>
+                           {% endifequal %}
+                        {% endfor %}
+                    </div>
+                     <div class="mt-5 mb-3">
+                        <h3 class="mt-5 mb-2">Leave a comment</h3>
+                        <p class="mb-4">We don't spam at your inbox.</p>
+                        <form action="" method="POST" class="row">
+                            {% csrf_token %}
+                            <div class="col-lg-12">
+                                <div class="form-group mb-3">
+                                    {{ form }}
+                                </div>
+                            </div>
+
+
+                            <div class="col-lg-12">
+                                <button type="submit" class="btn btn-hero btn-circled">Send a message</button>
+                            </div>
+                        </form>
+                    </div>
+
+
                     </div>
                  </div>
                 </div>
@@ -98,7 +137,7 @@
                         </div>
                           <div class="col-lg-12">
                             <div class="sidebar-widget download">
-                                {% if user.is_staff %}
+                                {% if user.is_customer %}
                                 <hr>
                                     <a href="{% url 'blog:course-create' %}"> <i class="fa fa-plus-circle"></i>Create new Course</a>
                                 {% endif %}
@@ -113,6 +152,7 @@
         </div>
     </div>
 </section>
+
 
 
 
