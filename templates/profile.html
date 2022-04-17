@@ -19,10 +19,41 @@
             </div>
         </div>
     </div>
+
 </div>
     <div class="pcoded-content">
         <div class="pcoded-inner-content">
             <!-- [ breadcrumb ] start -->
+               <section id="service">
+        <div class="container">
+            <div class="row">
+                {% for course in detail %}
+                  {% ifequal request.user course.user %}
+                  <div class="col-lg-4 col-sm-6 col-md-6">
+                    <div class="service-box">
+                        <div >
+                            <a href="{{ course.get_absolute_url }}"><img  style="height: 192px;" src="{{ course.image.url }}" alt="programming-icon" ></a>
+
+                        </div>
+                        <div class="service-inner">
+                            <h4>{{ course.title }}</h4></a>
+                            <p>{{ course.body| safe | linebreaks | truncatechars:100 }}</p><div class="date"><i class="fa fa-calendar-check"></i> {{ course.created_date | timesince }}  |   <i class="fa fa-user"></i> {{ course.user}}</div>
+                        </div>
+                    </div>
+                </div>
+                {% endifequal %}
+                {% endfor %}
+            </div>
+            <a href=""><div style="text-align: center;">see more course</div></a>
+        </div>
+    </section>
+            <div class=" m-auto text-center ">
+                <div class="banner-content content-padding">
+                    <h1 class="text-black">Profile Analysis</h1>
+                    <p>You will find all details about users activities</p>
+                </div>
+            </div>
+
 
             <!-- [ breadcrumb ] end -->
             <div class="main-body">
@@ -352,8 +383,11 @@
 
 
                     </div>
+
                     <!-- [ Main Content ] end -->
+
                 </div>
+
             </div>
         </div>
     </div>

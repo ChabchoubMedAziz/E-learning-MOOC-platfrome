@@ -19,7 +19,7 @@ class Comment(models.Model):
 	content = models.TextField()
 	slug = models.SlugField(unique=False, blank=True)
 	timestamp = models.DateTimeField(auto_now_add=True,)
-	course = models.ForeignKey('Course', related_name='comments', on_delete=models.CASCADE,default=0,db_constraint=False)
+	course = models.ForeignKey('Course', related_name='comments', on_delete=models.CASCADE,db_constraint=False)
 	#courses=course.objects.all()
 
 	def __str__(self):
@@ -108,7 +108,7 @@ class Course(models.Model):
 	image = models.ImageField(upload_to='image-course/')
 	slug = models.SlugField(unique=True, blank=True)
 	created_date = models.DateTimeField(auto_now_add=True)
-	#author = models.ForeignKey(Account, on_delete=models.CASCADE)
+	user = models.ForeignKey(User, on_delete=models.CASCADE)
 	featured = models.BooleanField(default=True)
 
 

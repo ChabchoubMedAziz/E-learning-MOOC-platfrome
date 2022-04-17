@@ -43,7 +43,7 @@
                         </div>
                         <div class="service-inner">
                             <h4>{{ course.title |linebreaks |truncatechars:30 }}</h4></a>
-                            <p>{{ course.body | safe | linebreaks | truncatechars:100 }}</p><div class="date"><i class="fa fa-calendar-check"></i> {{ course.created_date | timesince }}  |   <i class="fa fa-user"></i> {{ course.author }}</div>
+                            <p>{{ course.body | safe | linebreaks | truncatechars:100 }}</p><div class="date"><i class="fa fa-calendar-check"></i> {{ course.created_date | timesince }}  |   <i class="fa fa-user"></i> {{ course.user }}</div>
                         </div>
                     </div>
                 </div>

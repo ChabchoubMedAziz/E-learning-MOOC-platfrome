@@ -37,21 +37,16 @@
                     <label id="password2"for="password">Confirm Password</label>
                       {{ form.password2 }}
                   </div>
+
                   <div class="d-flex mb-5 align-items-center">
-                    <label class="control control--checkbox mb-0"><span class="caption">Admin</span>
-                        {{ form.is_admin }}
+                    <label class="control control--checkbox mb-0"><span class="caption">Teacher</span>
+                        {{ form.is_teacher }}
                       <div class="control__indicator"></div>
                     </label>
                   </div>
                   <div class="d-flex mb-5 align-items-center">
-                    <label class="control control--checkbox mb-0"><span class="caption">customer</span>
-                        {{ form.is_customer }}
-                      <div class="control__indicator"></div>
-                    </label>
-                  </div>
-                  <div class="d-flex mb-5 align-items-center">
-                    <label class="control control--checkbox mb-0"><span class="caption">employee</span>
-                        {{ form.is_employee }}
+                    <label class="control control--checkbox mb-0"><span class="caption">Student</span>
+                        {{ form.is_student }}
                       <div class="control__indicator"></div>
                     </label>
                   </div>

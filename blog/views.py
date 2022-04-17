@@ -82,7 +82,10 @@ def course_search(request):
 def course(request):#2
 	courses =  Course.objects.filter(featured=True)[:6]
 	detail = Course.objects.filter(featured=True)[:6]
+	user = request.user
+	#objects = get_object_or_404(Course)
 	context = {
+	#'objects': objects,
 	'course':courses,
 	'detail':detail,
 	}
@@ -103,6 +106,8 @@ def contact(request):
 	'filled':filled
 	}
 	return render(request, 'contact.html', context)
+
+
 @login_required
 def course_detail(request, slug):
 	objects = get_object_or_404(Course, slug=slug)
@@ -111,12 +116,14 @@ def course_detail(request, slug):
 	form = CommentForm(request.POST or None )
 	comments = Comment.objects.all()
 	user = request.user
+	message_r = request.POST.get('content')
 	if request.method == 'POST':
-
+		c = Comment(user=user, content=message_r, course=objects)
 		if form.is_valid():
 			form.instance.user = user
 			form.instance.post = objects
-			form.save()
+
+			c.save()
 
 
 	context = {
@@ -128,7 +135,7 @@ def course_detail(request, slug):
 
 @login_required
 def course_create(request):
-	# user = request.user
+	user = request.user
 	form = CourseForm(request.POST or None, request.FILES or None)
 	"""try:
 		author = User.objects.get(username=request.username)
@@ -137,7 +144,7 @@ def course_create(request):
 
 	if request.method == 'POST':
 		if form.is_valid():
-			#form.instance.author = author
+			form.instance.user = user
 			form.save()
 			return redirect(reverse('blog:course-detail', kwargs={
 				'slug': form.instance.slug
@@ -176,8 +183,11 @@ def profile(request):
 	objects = Course.objects.filter(featured=True)[:6]
 	comments = Comment.objects.all()
 	user = request.user
+	detail = Course.objects.filter(featured=True)[:6]
+
 
 	context = {
+		'detail': detail,
 		'segment': 'index',
 		'objects': objects,
 		'comments': comments, }
