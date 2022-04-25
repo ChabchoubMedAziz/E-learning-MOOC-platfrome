@@ -41,7 +41,10 @@ def index(request):#1
 	}
 	return render(request, 'index.html',context)
 
+def about(request):
+	return render(request, 'about.html')
 
+	
 def blog(request):#3
 	category = CategoryPost.objects.all()
 	#featured = Account.objects.filter(featured=True)
@@ -68,6 +71,7 @@ def blog(request):#3
 	'featured':featured,
 	}
 	return render(request, 'blog.html',context)
+
 
 
 def course_search(request):

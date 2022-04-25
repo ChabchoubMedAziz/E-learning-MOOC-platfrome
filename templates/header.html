@@ -18,7 +18,7 @@
                         </a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link smoth-scroll" href="/">About</a>
+                        <a class="nav-link smoth-scroll" href="{% url 'blog:about-view' %}">About</a>
                     </li>
                      {% if  user.is_teacher or user.is_superuser %}
                     <li class="nav-item">
